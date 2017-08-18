@@ -1,0 +1,40 @@
+{
+  "name": "quizard-server",
+  "version": "1.0.0",
+  "description": "A Quizard back end server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo test",
+    "start": "nodemon server.js",
+    "update": "git add . && git commit -m \"Updating\" && git push"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatthewJRoybal/Quizard-Server.git"
+  },
+  "author": "Matthew J Roybal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatthewJRoybal/Quizard-Server/issues"
+  },
+  "homepage": "https://github.com/MatthewJRoybal/Quizard-Server#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
+    "faker": "^4.1.0",
+    "mocha": "^3.5.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^7.4.3",
+    "mongoose": "^4.11.7",
+    "mongoose-simple-random": "^0.4.1",
+    "morgan": "^1.8.2",
+    "node-gyp": "^3.6.2",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
+    "passport-jwt": "^2.2.1"
+  }
+}

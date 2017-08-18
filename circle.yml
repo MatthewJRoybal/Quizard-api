@@ -1,0 +1,14 @@
+machine:
+  node:
+    version: 7.8.0
+dependencies:
+  override:
+    - npm install
+test:
+  pre:
+    - chmod 0777 ./node_modules/.bin/mocha
+deployment:
+  staging:
+    branch: master
+    heroku:
+      appname: quizard-me
