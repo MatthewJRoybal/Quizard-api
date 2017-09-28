@@ -1,12 +1,12 @@
 /********************************************************
 ***************   PRODUCTION DATABASE   *****************
 ********************************************************/
-exports.DATABASE_URL = (process.env.DATABASE_URL || 'mongodb://CaptLonestar:Croce200#@ds155934.mlab.com:55934/quizard');
+exports.DATABASE_URL = (process.env.DATABASE_URL || 'mongodb://CaptLonestar:^QZ987js%@ds155934.mlab.com:55934/quizard');
 
 /********************************************************
 ******************   LOCAL DATABASE   *******************
 ********************************************************/
-exports.TEST_DATABASE_URL = (process.env.TEST_DATABASE_URL || 'mongodb://CaptLonestar:Croce200#@ds159662.mlab.com:59662/quizard-test');
+exports.TEST_DATABASE_URL = (process.env.TEST_DATABASE_URL || 'mongodb://CaptLonestar:^QZ987js%@ds159662.mlab.com:59662/quizard-test');
 
 /********************************************************
 *******************   PORT NUMBER   *********************
