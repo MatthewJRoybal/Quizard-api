@@ -66,7 +66,7 @@ describe ('RESULTS TESTING', function() {
 	});
 	// Remove test users after testing
 	after(function() {
-		return tearDownDb();
+		//return tearDownDb();
 	});
 	// Close the server after testing
 	after(function() {
@@ -74,8 +74,8 @@ describe ('RESULTS TESTING', function() {
 	});
 
 	const newResult = generateTestResults();
-  
-	
+
+
 	// Test results endpoint
 	describe('Results', function() {
 		it('Should create test results', function(done) {
@@ -89,7 +89,7 @@ describe ('RESULTS TESTING', function() {
           chai.request(app)
           .post('/results?token=' + res.body.token)
           .send(newResult)
-          .end(function(err, res) { 
+          .end(function(err, res) {
             // Chai request chain end, callback when ready
             should.not.exist(err);
             res.should.have.status(200);

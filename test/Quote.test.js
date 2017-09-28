@@ -59,7 +59,7 @@ describe ('QUOTES TESTING', function() {
 	});
 
 	const newQuote = generateTestQuotes();
-	
+
 	// Test new user creation endpoint
 	describe('Contributed quotes', function() {
 		it('Should create magic quotes', function(done) {
@@ -67,7 +67,7 @@ describe ('QUOTES TESTING', function() {
 			chai.request(app)
 				.post('/quotes')
 				.send(newQuote)
-				.end(function(err, res) { 
+				.end(function(err, res) {
 					console.log(err);
 				// Ending chai request chain, when it's done do the callback
 //					should.not.exist(err);

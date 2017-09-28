@@ -55,7 +55,8 @@ describe ('QUESTION TESTING', function() {
 	});
 	// Remove test users after testing
 	after(function() {
-    return tearDownDb();
+		return seedTestQuestions();
+    // return tearDownDb();
 	});
 	// Close the server after testing
 	after(function() {
@@ -63,14 +64,14 @@ describe ('QUESTION TESTING', function() {
 	});
 
 	const newQuestion = generateTestQuestion();
-	
+
 	// Test new user creation endpoint
 	describe('Contributed questions', function() {
 		it('Should create new questions', function(done) {
 			chai.request(app)
 				.post('/questions')
 				.send(newQuestion)
-				.end(function(err, res) { 
+				.end(function(err, res) {
 					console.log(err);
 				// Ending chai request chain, when it's done do the callback
 					should.not.exist(err);
