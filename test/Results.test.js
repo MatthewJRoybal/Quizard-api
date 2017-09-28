@@ -60,8 +60,8 @@ describe ('RESULTS TESTING', function() {
 	});
 	// Insert db test users before testing
 	before(function() {
-    newTestUser = generateTestUser();
-    userModel.create(newTestUser);
+    // newTestUser = generateTestUser();
+    // userModel.create(newTestUser);
 		return seedTestResults();
 	});
 	// Remove test users after testing

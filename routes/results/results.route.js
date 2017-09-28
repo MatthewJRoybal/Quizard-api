@@ -20,10 +20,10 @@ router.get('/display', protected, function(req, res, err) {
   req.body.user_id = req.user._doc._id;
 	resultsModel.find({
     user_id: req.body.user_id
-  })	
-		.then(function(data) { 
+  })
+		.then(function(data) {
 			res.status(200).send(data);
-			console.log("You got your results!", data);
+			console.log("You got your results!");
 		}).catch(function(err) {
 			res.status(500).send(err);
 			console.log("You got an error:" + err);

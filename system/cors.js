@@ -11,7 +11,6 @@ router.all('*', function(req, res, next) {
     if (req.method === 'OPTIONS') {
       res.sendStatus(200);
     } else {
-      console.log('cors');
       next();
     }
   });
