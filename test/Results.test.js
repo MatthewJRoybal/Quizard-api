@@ -62,11 +62,11 @@ describe ('RESULTS TESTING', function() {
 	before(function() {
     newTestUser = generateTestUser();
     userModel.create(newTestUser);
-//		return seedTestResults();
+		return seedTestResults();
 	});
 	// Remove test users after testing
 	after(function() {
-		//return tearDownDb();
+		return tearDownDb();
 	});
 	// Close the server after testing
 	after(function() {

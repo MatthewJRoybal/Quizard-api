@@ -1,7 +1,7 @@
 /********************************************************
 ***************   PRODUCTION DATABASE   *****************
 ********************************************************/
-exports.DATABASE_URL = (process.env.DATABASE_URL || 'mongodb://localhost/quizard-local');
+exports.DATABASE_URL = (process.env.DATABASE_URL || 'mongodb://CaptLonestar:Croce200#@ds155934.mlab.com:55934/quizard');
 
 /********************************************************
 ******************   LOCAL DATABASE   *******************
