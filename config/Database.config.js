@@ -6,7 +6,7 @@ exports.DATABASE_URL = (process.env.DATABASE_URL || 'mongodb://CaptLonestar:Croc
 /********************************************************
 ******************   LOCAL DATABASE   *******************
 ********************************************************/
-exports.TEST_DATABASE_URL = (process.env.TEST_DATABASE_URL || 'mongodb://localhost/quizard-local');
+exports.TEST_DATABASE_URL = (process.env.TEST_DATABASE_URL || 'mongodb://CaptLonestar:Croce200#@ds159662.mlab.com:59662/quizard-test');
 
 /********************************************************
 *******************   PORT NUMBER   *********************
