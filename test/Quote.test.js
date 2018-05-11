@@ -8,9 +8,9 @@ const mongoose = require('mongoose');
 const should = chai.should();
 
 // Import modules for testing
-const {quoteModel} = require('../models/Quote.model');
+const {quoteModel} = require('../models/quote');
 const {runServer, app, closeServer} = require('../server');
-const {TEST_DATABASE_URL} = require('../config/Database.config');
+const {DB_TEST} = require('../system/config');
 
 // Use chaiHTTP for transmission
 chai.use(chaiHttp);
@@ -43,7 +43,7 @@ function tearDownDb() {
 describe ('QUOTES TESTING', function() {
 	// Start the server before testing
 	before(function() {
-		return runServer(TEST_DATABASE_URL);
+		return runServer(DB_TEST);
 	});
 	// Insert db test users before testing
 	before(function() {
@@ -65,7 +65,7 @@ describe ('QUOTES TESTING', function() {
 		it('Should create magic quotes', function(done) {
 			// Is the chai request "app" the same const app from server.js for express()?
 			chai.request(app)
-				.post('/quotes')
+				.post('/api/quiz/quotes')
 				.send(newQuote)
 				.end(function(err, res) {
 					console.log(err);

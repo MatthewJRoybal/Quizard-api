@@ -8,10 +8,10 @@ const mongoose = require('mongoose');
 const should = chai.should();
 
 // Imports
-const {resultsModel} = require('../models/Results.model');
+const {resultsModel} = require('../models/results');
 const {runServer, app, closeServer} = require('../server');
-const {TEST_DATABASE_URL} = require('../config/Database.config');
-const {userModel} = require('../models/User.model');
+const {DB_TEST} = require('../system/config');
+const User = require('../models/user');
 
 // chaiHTTP for transmission
 chai.use(chaiHttp);
@@ -36,11 +36,8 @@ function generateTestResults() {
 // Generate a test user
 function generateTestUser() {
 	return {
-		username: faker.internet.userName(),
 		email: faker.internet.email(),
 		password: faker.internet.password(),
-		firstName: faker.name.firstName(),
-		lastName: faker.name.lastName(),
 		gender: ['Wizard', 'Witch'][Math.floor(Math.random() * 2)]
 	}
 }
@@ -56,17 +53,17 @@ describe ('RESULTS TESTING', function() {
 	// Start the server before testing
   let newTestUser;
 	before(function() {
-		return runServer(TEST_DATABASE_URL);
+		return runServer(DB_TEST);
 	});
 	// Insert db test users before testing
 	before(function() {
-    // newTestUser = generateTestUser();
-    // userModel.create(newTestUser);
+    newTestUser = generateTestUser();
+    User.create(newTestUser);
 		return seedTestResults();
 	});
 	// Remove test users after testing
 	after(function() {
-		return tearDownDb();
+		// return tearDownDb();
 	});
 	// Close the server after testing
 	after(function() {
@@ -80,14 +77,14 @@ describe ('RESULTS TESTING', function() {
 	describe('Results', function() {
 		it('Should create test results', function(done) {
 			chai.request(app)
-        .post('/user/login')
+        .post('/api/user/signin')
         .send({
-					username: newTestUser.username,
+					email: newTestUser.email,
 					password: newTestUser.password
 				})
         .end(function(err, res) {
           chai.request(app)
-          .post('/results?token=' + res.body.token)
+          .post('/api/quiz/results?token=' + res.body.token)
           .send(newResult)
           .end(function(err, res) {
             // Chai request chain end, callback when ready
@@ -95,7 +92,7 @@ describe ('RESULTS TESTING', function() {
             res.should.have.status(200);
             res.should.be.json;
             res.body.should.be.a('object');
-            res.body.should.have.property('_id');
+            // res.body.should.have.property('_id');
             done();
           })
         });

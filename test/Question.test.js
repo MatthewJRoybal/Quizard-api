@@ -8,9 +8,9 @@ const mongoose = require('mongoose');
 const should = chai.should();
 
 // Import modules for testing
-const {questionModel} = require('../models/Question.model');
+const {questionModel} = require('../models/question');
 const {runServer, app, closeServer} = require('../server');
-const {TEST_DATABASE_URL} = require('../config/Database.config');
+const {DB_TEST} = require('../system/config');
 
 // Use chaiHTTP for transmission
 chai.use(chaiHttp);
@@ -47,7 +47,7 @@ function generateTestQuestion() {
 describe ('QUESTION TESTING', function() {
 	// Start the server before testing
 	before(function() {
-		return runServer(TEST_DATABASE_URL);
+		return runServer(DB_TEST);
 	});
 	// Insert db test users before testing
 	before(function() {
@@ -69,7 +69,7 @@ describe ('QUESTION TESTING', function() {
 	describe('Contributed questions', function() {
 		it('Should create new questions', function(done) {
 			chai.request(app)
-				.post('/questions')
+				.post('/api/quiz/questions')
 				.send(newQuestion)
 				.end(function(err, res) {
 					console.log(err);

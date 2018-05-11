@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const {userModel} = require('./User.model');
+const User = require('./user');
 
 mongoose.Promise = global.Promise;
 
 const ResultsSchema = new mongoose.Schema({
-	user_id: {type: mongoose.Schema.Types.ObjectId, ref: 'userModel'},
+	owner: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
 	score: {
 		type: Number,
 		required: true

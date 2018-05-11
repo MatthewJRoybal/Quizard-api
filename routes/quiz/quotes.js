@@ -4,32 +4,23 @@ const random			= require('mongoose-simple-random');
 const bodyParser 	= require('body-parser');
 const jsonParser 	= require('body-parser').json();
 
-const {quoteModel} 		= require('../.././models/Quote.model'); 
+const {quoteModel} 		= require('../../models/quote');
 
 const router = express.Router();
-
 router.use(jsonParser);
 
-/********************************************
- *************   GET QUOTES   ***************
- ********************************************/
 
 router.get('/', function(req, res, err) {
 	var count = Number(req.query.count);
 	var promises = [];
 	quoteModel.find().limit(count).skip(Math.floor(Math.random(count)))
-		.then(function(data) { 
+		.then(function(data) {
 			res.status(200).send(data);
-			console.log("You got your quotes!");
 		}).catch(function(err) {
 			res.status(500).send(err);
 			console.log("You got an error:" + err);
 		});
 });
-
-/********************************************
- *************   POST QUOTES   **************
- ********************************************/
 
 router.post('/', function(req, res) {
 	var newQuote = new quoteModel(req.body);
@@ -40,5 +31,4 @@ router.post('/', function(req, res) {
 	})
 });
 
-// Why does this need to be exported?
 module.exports = router;

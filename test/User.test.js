@@ -8,9 +8,9 @@ const mongoose = require('mongoose');
 const should = chai.should();
 
 // Import modules for testing
-const {userModel} = require('../models/User.model');
+const User = require('../models/user');
 const {runServer, app, closeServer} = require('../server');
-const {TEST_DATABASE_URL} = require('../config/Database.config');
+const {DB_TEST} = require('../system/config');
 
 // Use chaiHTTP for transmission
 chai.use(chaiHttp);
@@ -21,17 +21,14 @@ function seedTestUsers() {
 	for(let i = 1; i <=10; i++) {
 		seedUsers.push(generateTestUser());
 	}
-	return userModel.insertMany(seedUsers);
+	return User.insertMany(seedUsers);
 }
 
 // Generate a test user
 function generateTestUser() {
 	return {
-		username: faker.internet.userName(),
 		email: faker.internet.email(),
 		password: faker.internet.password(),
-		firstName: faker.name.firstName(),
-		lastName: faker.name.lastName(),
 		gender: ['Wizard', 'Witch'][Math.floor(Math.random() * 2)]
 	}
 }
@@ -46,7 +43,7 @@ function tearDownDb() {
 describe ('USER TESTING', function() {
 	// Start the server before testing
 	before(function() {
-		return runServer(TEST_DATABASE_URL);
+		return runServer(DB_TEST);
 	});
 	// Insert db test users before testing
 	before(function() {
@@ -68,16 +65,16 @@ describe ('USER TESTING', function() {
 		it('Should create a user account', function(done) {
 			// Is the chai request "app" the same const app from server.js for express()?
 			chai.request(app)
-				.post('/user/create')
+				.post('/api/user/signup')
 				.send(newTestUser)
 				.end(function(err, res) {
-					console.log(err);
+					console.log(res.body);
 				// Ending chai request chain, when it's done do the callback
 					should.not.exist(err);
 					res.should.have.status(200);
 					res.should.be.json;
 					res.body.should.be.a('object');
-					res.body.should.have.property('_id');
+					// res.body.should.have.property('_id');
 					done(); // This is actually when its ended and the next test can be done
 			});
 		});
@@ -85,9 +82,9 @@ describe ('USER TESTING', function() {
 	describe('User login process', function() {
 		it('Should login a user', function() {
 			return chai.request(app)
-				.post('/user/login')
+				.post('/api/user/signin')
 				.send({
-					username: newTestUser.username,
+					email: newTestUser.email,
 					password: newTestUser.password
 				})
 				.then(function(res) {

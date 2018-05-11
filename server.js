@@ -1,41 +1,37 @@
+// Dotenv
+require('dotenv').config();
+
 // Node modules
+const passport 		= require('passport');
 const express 		= require('express');
 const bodyParser 	= require('body-parser');
 const jwt 				= require('jsonwebtoken');
 const logger 			= require('morgan');
 const mongoose 		= require('mongoose');
-const app 				= express();
+const cors 				= require('cors');
 
-// Imports
-const {DATABASE_URL, PORT} = require('./config/Database.config');
-const cors 								 = require('./system/cors');
-
-// Routing
-const userCreate 	= require('./routes/user/Create.user.route');
-const userLogin  	= require('./routes/user/Login.user.route');
-const questions		= require('./routes/quiz/questions.route');
-const quotes			= require('./routes/quiz/quotes.route');
-const results 		= require('./routes/results/results.route');
+// File Imports
+const {DB_URL, PORT} = require('./system/config');
 
 // express
-app.use(cors); 							 // CORS
+const app 				= express();
+app.use(cors()); 							 // CORS
 app.use(bodyParser.json()); // Parsing
 app.use(logger('common')); // Error logging
 
-// Routing
-app.use('/user/create', userCreate); // New user
-app.use('/user/login', userLogin);  // Login user
-app.use('/questions', questions);
-app.use('/quotes', quotes);
-app.use('/results', results);
+// Routes
+app.use('/api', require('./routes'));
+app.use('*', function(req, res, next) {
+	res.status(404).send("Sorry can't find that!");
+});
 
 // Run server
 let server;
 mongoose.Promise 	= global.Promise;
 
-function runServer(databaseUrl=DATABASE_URL, port=PORT) {
+function runServer(databaseUrl=DB_URL, port=PORT) {
   return new Promise((resolve, reject) => {
-    mongoose.connect(DATABASE_URL, {useMongoClient: true}, (err) => {
+    mongoose.connect(DB_URL, (err) => {
       if (err) {
         return reject(err);
       }
