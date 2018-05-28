@@ -32,10 +32,8 @@ router.get('/', protected, function(req, res, err) {
 });
 
 router.post('/', protected, function(req, res) {
-  console.log('results req body:', req.body);
-  const owner = req.user._id;
-  req.body.user_id = req.user._doc._id;
-  var newResult = new resultsModel(req.body);
+  const resultsObj = Object.assign(req.body, { owner: req.user._id });
+  var newResult = new resultsModel(resultsObj);
 	newResult.save()
 		.then(function(results) {
 			res.status(200).send(results);
