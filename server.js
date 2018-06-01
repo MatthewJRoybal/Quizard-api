@@ -15,16 +15,13 @@ const { DB_URL, PORT } = require('./system/config');
 
 // express
 const app = express();
-const corsOptions = {
-	origin: 'http://quizard.me',
-	optionsSuccessStatus: 200
-}; // CORS
+app.use(cors()); // CORS
 app.use(bodyParser.json()); // Parsing
 app.use(logger('common')); // Error logging
 
 // Routes
-app.use('/api', cors(corsOptions), require('./routes'));
-app.use('*', cors(corsOptions), function(req, res, next) {
+app.use('/api', require('./routes'));
+app.use('*', function(req, res, next) {
 	res.status(404).send("Sorry can't find that!");
 });
 
