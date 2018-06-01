@@ -3,12 +3,12 @@
  * API - ROUTES - USER - INDEX.JS
  *********************************************************/
 
- const passport = require('passport');
- const router = require('express').Router();
- const passportService = require('../../system/passport');
+const router = require('express').Router();
 
- // Passport authentication strategy
- const SigninCheck = passport.authenticate('local', { session: false });
+// Passport authentication strategy
+const passport = require('passport');
+const passportService = require('../../system/passport');
+const SigninCheck = passport.authenticate('local', { session: false });
 
 router.use('/signup', require('./signup')); // New user
 router.use('/signin', SigninCheck, require('./signin'));  // Login user

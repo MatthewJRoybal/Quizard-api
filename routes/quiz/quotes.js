@@ -1,34 +1,52 @@
-const express 		= require('express');
-const mongoose 		= require('mongoose');
-const random			= require('mongoose-simple-random');
-const bodyParser 	= require('body-parser');
-const jsonParser 	= require('body-parser').json();
+'use-strict';
+/********************************************
+ ***     API - ROUTES - QUIZ - QUOTES     ***
+ ********************************************/
 
-const {quoteModel} 		= require('../../models/quote');
+const mongoose = require('mongoose');
+const router = require('express').Router();
 
-const router = express.Router();
-router.use(jsonParser);
+// Passport authentication strategy
+const passport = require('passport');
+const passportService = require('../../system/passport');
+const protected = passport.authenticate('jwt', { session: false });
 
+// Model
+const { quoteModel } = require('../../models/quote');
+
+/*
+  * GET QUOTES
+  */
 
 router.get('/', function(req, res, err) {
 	var count = Number(req.query.count);
 	var promises = [];
-	quoteModel.find().limit(count).skip(Math.floor(Math.random(count)))
+	quoteModel
+		.find()
+		.limit(count)
+		.skip(Math.floor(Math.random(count)))
 		.then(function(data) {
 			res.status(200).send(data);
-		}).catch(function(err) {
+		})
+		.catch(function(err) {
 			res.status(500).send(err);
-			console.log("You got an error:" + err);
 		});
 });
 
+/*
+ * POST QUOTES
+ */
+
 router.post('/', function(req, res) {
 	var newQuote = new quoteModel(req.body);
-	newQuote.save().then(function(quote) {
-		res.status(200).send(quote);
-	}).catch(function(err) {
-		res.status(500).send(err);
-	})
+	newQuote
+		.save()
+		.then(function(quote) {
+			res.status(200).send(quote);
+		})
+		.catch(function(err) {
+			res.status(500).send(err);
+		});
 });
 
 module.exports = router;
