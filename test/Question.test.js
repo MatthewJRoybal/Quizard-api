@@ -55,8 +55,8 @@ describe ('QUESTION TESTING', function() {
 	});
 	// Remove test users after testing
 	after(function() {
-		return seedTestQuestions();
-    // return tearDownDb();
+		// return seedTestQuestions();
+    return tearDownDb();
 	});
 	// Close the server after testing
 	after(function() {

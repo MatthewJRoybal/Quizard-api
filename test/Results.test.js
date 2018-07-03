@@ -26,17 +26,18 @@ function seedTestResults() {
 
 function generateTestResults() {
 	return {
-		user_id: faker.random.uuid(),
     score: faker.random.number(),
 		results: faker.random.arrayElement(),
 		date: faker.date.past()
-	}
+	};
 }
 
 // Generate a test user
 function generateTestUser() {
+	let userEmail = faker.internet.email();
+	userEmail = userEmail.toLowerCase();
 	return {
-		email: faker.internet.email(),
+		email: userEmail,
 		password: faker.internet.password(),
 		gender: ['Wizard', 'Witch'][Math.floor(Math.random() * 2)]
 	}
@@ -50,52 +51,45 @@ function tearDownDb() {
 
 // Describe the test
 describe ('RESULTS TESTING', function() {
-	// Start the server before testing
-  let newTestUser;
 	before(function() {
 		return runServer(DB_TEST);
 	});
-	// Insert db test users before testing
 	before(function() {
-    newTestUser = generateTestUser();
-    User.create(newTestUser);
 		return seedTestResults();
 	});
-	// Remove test users after testing
 	after(function() {
-		// return tearDownDb();
-	});
-	// Close the server after testing
+		return tearDownDb();
+	})
 	after(function() {
 		return closeServer();
 	});
 
+	const newTestUser = generateTestUser();
 	const newResult = generateTestResults();
 
+	console.log(newResult);
 
 	// Test results endpoint
 	describe('Results', function() {
 		it('Should create test results', function(done) {
 			chai.request(app)
-        .post('/api/user/signin')
-        .send({
-					email: newTestUser.email,
-					password: newTestUser.password
-				})
+        .post('/api/user/signup')
+        .send(newTestUser)
         .end(function(err, res) {
-          chai.request(app)
-          .post('/api/quiz/results?token=' + res.body.token)
-          .send(newResult)
-          .end(function(err, res) {
-            // Chai request chain end, callback when ready
-            should.not.exist(err);
-            res.should.have.status(200);
-            res.should.be.json;
-            res.body.should.be.a('object');
-            // res.body.should.have.property('_id');
-            done();
-          })
+					const token = res.body.token;
+					chai.request(app)
+						.post('/api/quiz/results')
+						.set('Authorization', token)
+						.send(newResult)
+						.end(function(err, res) {
+							res.should.be.json;
+							res.body.should.be.a('object');
+							res.body.should.have.property('_id');
+							res.should.have.status(200);
+							should.not.exist(err);
+							done();
+						});
         });
-			});
 		});
 	});
+});

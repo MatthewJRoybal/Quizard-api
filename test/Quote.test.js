@@ -51,7 +51,8 @@ describe ('QUOTES TESTING', function() {
 	});
 	// Remove test users after testing
 	after(function() {
-		return seedTestQuotes(); // return tearDownDb();
+		// return seedTestQuotes(); 
+		return tearDownDb();
 	});
 	// Close the server after testing
 	after(function() {

@@ -51,7 +51,7 @@ describe ('USER TESTING', function() {
 	});
 	// Remove test users after testing
 	after(function() {
-		return seedTestUsers(); // return tearDownDb();
+		return tearDownDb();
 	});
 	// Close the server after testing
 	after(function() {
@@ -68,13 +68,12 @@ describe ('USER TESTING', function() {
 				.post('/api/user/signup')
 				.send(newTestUser)
 				.end(function(err, res) {
-					console.log(res.body);
 				// Ending chai request chain, when it's done do the callback
 					should.not.exist(err);
 					res.should.have.status(200);
 					res.should.be.json;
 					res.body.should.be.a('object');
-					// res.body.should.have.property('_id');
+					res.body.should.have.property('token');
 					done(); // This is actually when its ended and the next test can be done
 			});
 		});

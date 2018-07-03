@@ -4,7 +4,7 @@
   "description": "A Quizard back end server",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha",
+    "test": "mocha",
     "start": "nodemon server.js",
     "update": "git add . && git commit -m \"Updating\" && git push"
   },
@@ -22,7 +22,8 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "faker": "^4.1.0",
-    "mocha": "^3.5.0"
+    "mocha": "^3.5.0",
+    "mock-local-storage": "^1.0.5"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
