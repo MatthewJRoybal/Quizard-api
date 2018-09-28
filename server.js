@@ -20,7 +20,7 @@ const corsOptions = {
 	origin: 'https://quizard.me' || 'file:///C:/Users/matth/Development/Projects/Quizard/client/index.html',
 	optionsSuccessStatus: 200
 };
-
+ 
 // app.use(cors()); // CORS
 app.use(bodyParser.json()); // Parsing
 app.use(logger('common')); // Error logging
