@@ -17,7 +17,7 @@ const { DB_URL, PORT } = require('./system/config');
 const app = express();
 
 const corsOptions = {
-	origin: 'https://quizard.me',
+	origin: 'https://quizard.me' || 'file:///C:/Users/matth/Development/Projects/Quizard/client/index.html',
 	optionsSuccessStatus: 200
 };
 
