@@ -17,19 +17,29 @@ const { DB_URL, PORT } = require('./system/config');
 const app = express();
 
 const corsOptions = {
-	origin: 'https://quizard.me' || 'file:///C:/Users/matth/Development/Projects/Quizard/client/index.html',
+	origin: 'https://quizard.me',
 	optionsSuccessStatus: 200
 };
- 
-// app.use(cors()); // CORS
+
+app.use(cors());
 app.use(bodyParser.json()); // Parsing
 app.use(logger('common')); // Error logging
 
 // Routes
-app.use('/api', cors(corsOptions), require('./routes'));
-app.use('*', cors(corsOptions), function(req, res, next) {
+app.use('/api', require('./routes'));
+app.use('*', function(req, res, next) {
 	res.status(404).send("Sorry can't find that!");
 });
+
+// app.use(cors()); // CORS
+// app.use(bodyParser.json()); // Parsing
+// app.use(logger('common')); // Error logging
+
+// Routes
+// app.use('/api', cors(corsOptions), require('./routes'));
+// app.use('*', cors(corsOptions), function(req, res, next) {
+// 	res.status(404).send("Sorry can't find that!");
+// });
 
 // Run server
 let server;
